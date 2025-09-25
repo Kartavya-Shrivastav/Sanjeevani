@@ -77,10 +77,7 @@ const ChatUI = () => {
 
           {!showIntro && (
             <>
-              <div className="mb-6">
-                <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2 text-left">संजीवनी</h1>
-              </div>
-              <div className="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 mb-6 p-4 min-h-[120px] max-h-72 overflow-y-auto text-left">
+              <div className="bg-gray-50 dark:bg-gray-950 mb-6 p-4 min-h-[120px] max-h-72 text-left">
                 {messages.map((msg, idx) => (
                   <div key={idx} className={`mb-2 flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                     <div className={`px-4 py-2 rounded-lg text-base max-w-[80%] whitespace-pre-line ${msg.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100'}`}>
