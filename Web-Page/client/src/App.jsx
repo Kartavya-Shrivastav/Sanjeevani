@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import ChatUI from './components/ChatUI';
 import Sidebar from './components/Sidebar';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from './components/ui/dropdown-menu';
+import { Toggle } from './components/ui/toggle';
+import { FaSun, FaMoon } from 'react-icons/fa';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './index.css';
 
@@ -14,11 +16,29 @@ function App() {
     }
     return "English";
   });
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") === "dark";
+    }
+    return false;
+  });
 
   useEffect(() => {
     localStorage.setItem("language", language);
   }, [language]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const html = document.documentElement;
+      if (darkMode) {
+        html.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+      } else {
+        html.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+      }
+    }
+  }, [darkMode]);
 
   const handleSelectChat = (chat) => {
     setSidebarOpen(false);
@@ -38,27 +58,36 @@ function App() {
         </div>
       </button>
 
-      {/* Language dropdown */}
-      <div className="fixed top-4 right-4 z-50">
+      {/* Language dropdown & Dark mode toggle */}
+      <div className="fixed top-4 right-4 z-50 flex items-center gap-3">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 px-4 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 hover:text-gray-800 dark:hover:text-gray-100">
               🌐 {language}
             </button>
           </DropdownMenuTrigger>
-
           <DropdownMenuContent className="w-40">
-            <DropdownMenuItem onClick={() => setLanguage("English")}>
+            <DropdownMenuItem onClick={() => setLanguage("English")}> 
               English
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setLanguage("Hindi")}>
+            <DropdownMenuItem onClick={() => setLanguage("Hindi")}> 
               हिंदी
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setLanguage("Odia")}>
+            <DropdownMenuItem onClick={() => setLanguage("Odia")}> 
               ଓଡ଼ିଆ
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        <Toggle
+          aria-label="Toggle dark mode"
+          variant="outline"
+          size="default"
+          pressed={darkMode}
+          onPressedChange={setDarkMode}
+          className="ml-1"
+        >
+          {darkMode ? <FaSun className="text-yellow-400" /> : <FaMoon className="text-gray-600 dark:text-gray-300" />}
+        </Toggle>
       </div>
       
       {/* Sidebar */}
