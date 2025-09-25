@@ -2,29 +2,23 @@ import React, { useState, useEffect } from 'react';
 
 import ChatUI from './components/ChatUI';
 import Sidebar from './components/Sidebar';
-import { FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from './components/ui/dropdown-menu';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import './index.css';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('theme');
-      if (saved) return saved === 'dark';
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [language, setLanguage] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("language") || "English";
     }
-    return false;
+    return "English";
   });
 
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [darkMode]);
+    localStorage.setItem("language", language);
+  }, [language]);
+
 
   const handleSelectChat = (chat) => {
     setSidebarOpen(false);
@@ -44,21 +38,29 @@ function App() {
         </div>
       </button>
 
-      {/* Dark mode toggle */}
-      <button
-        className="fixed top-4 right-4 z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 px-4 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 hover:text-gray-800 dark:hover:text-gray-100"
-        onClick={() => setDarkMode(!darkMode)}
-        aria-label="Toggle dark mode"
-      >
-        <div className="relative w-4 h-4">
-          <FaSun className={`absolute inset-0 transition-all duration-300 ${darkMode ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90'}`} />
-          <FaMoon className={`absolute inset-0 transition-all duration-300 ${darkMode ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'}`} />
-        </div>
-        <span className="hidden sm:inline text-sm font-medium">
-          {darkMode ? 'Light' : 'Dark'}
-        </span>
-      </button>
+      {/* Language dropdown */}
+      <div className="fixed top-4 right-4 z-50">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 px-4 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 hover:text-gray-800 dark:hover:text-gray-100">
+              🌐 {language}
+            </button>
+          </DropdownMenuTrigger>
 
+          <DropdownMenuContent className="w-40">
+            <DropdownMenuItem onClick={() => setLanguage("English")}>
+              English
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLanguage("Hindi")}>
+              हिंदी
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLanguage("Odia")}>
+              ଓଡ଼ିଆ
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+      
       {/* Sidebar */}
       <Sidebar
         isOpen={sidebarOpen}
