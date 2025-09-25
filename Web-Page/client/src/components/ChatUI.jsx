@@ -21,7 +21,7 @@ const ChatUI = () => {
               <FaComments className="text-white text-2xl" />
             </div>
             <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-              Sanjeevani
+              संजीवनी
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
               आपकी क्या सहायता कर सकता हूं?
@@ -56,7 +56,7 @@ const ChatUI = () => {
               <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your message..."
+                placeholder="यहाँ लिखें"
                 className="flex-1 bg-transparent border-none outline-none resize-none px-4 py-3 text-gray-800 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 text-base leading-6 max-h-32 min-h-[24px]"
                 rows={1}
                 style={{

@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaPaperPlane, FaSun, FaMoon, FaBars, FaTimes, FaPlus, FaComments } from 'react-icons/fa';
 
 const Sidebar = ({ isOpen, onClose, onSelectChat }) => {
-  const [chats, setChats] = useState([
-    { title: "Healthcare Query", id: 1 },
-    { title: "Medicine Information", id: 2 },
-    { title: "Symptom Analysis", id: 3 }
-  ]);
+  const [chats, setChats] = useState([]);
 
   const handleNewChat = () => {
     onSelectChat(null);
